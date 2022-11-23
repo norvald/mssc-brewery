@@ -1,6 +1,7 @@
 package guru.springframework.msscbrewery.services;
 
 import guru.springframework.msscbrewery.web.model.BeerDto;
+import org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -16,5 +17,17 @@ public class BeerServiceImpl implements BeerService {
                 .beerName("Galaxy Cat")
                 .beerStyle("Pale Ale")
                 .build();
+    }
+
+    @Override
+    public BeerDto saveNewBeer(BeerDto beerDto) {
+        return BeerDto.builder()
+                .id(UUID.randomUUID())
+                .build();
+    }
+
+    @Override
+    public void updateBeer(UUID beerId, BeerDto beerDto) {
+        // todo
     }
 }
