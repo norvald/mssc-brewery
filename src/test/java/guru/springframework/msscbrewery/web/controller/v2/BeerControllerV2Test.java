@@ -38,11 +38,23 @@ class BeerControllerV2Test {
     void createBeer() throws Exception {
         BeerDtoV2 beerDto = BeerDtoV2.builder().beerName("Lucky Jack").beerStyle(BeerStyleEnum.APA).build();
         String beerDtoJson = objectMapper.writeValueAsString(beerDto);
+        System.out.println(beerDtoJson);
         mockMvc.perform(post("/api/v2/beer/")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(beerDtoJson))
                     .andExpect(status().isCreated());
 
-    }
+        beerDtoJson = "{\"id\":null,\"beerName\":\"Lucky Jack\",\"berStyle\":\"APA\",\"upc\":null}";
+        mockMvc.perform(post("/api/v2/beer/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(beerDtoJson))
+                .andExpect(status().isBadRequest());
+
+        beerDtoJson = "{\"id\":null,\"beerName\":\"Lucky Jack\",\"beerStyle\":\"APA\",\"upc\":-10}";
+        mockMvc.perform(post("/api/v2/beer/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(beerDtoJson))
+                .andExpect(status().isBadRequest());
+        }
 
 }
